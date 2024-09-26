@@ -1,43 +1,43 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 
-contract Token {
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-  uint256 public totalSupply;
-  address public owner;
-  string public name = "Flexible_joey";
-    string public symbol = "Fljy";
-    uint8 public decimals = 18;
+contract namantoken {
+    string public tokenName = "naman";
+    string public tokenAbbr = "NHT";
 
-  constructor() {
-    owner = msg.sender;
-  }
+    address owner;
 
-  mapping(address => uint256) public balances;
+    mapping(address => uint) record;
 
-  // Mint function
-  function mint(address to, uint256 amount) public {
-    require(msg.sender == owner, "Only the contract owner can mint tokens.");
-    require(amount > 0, "Amount must be greater than 0.");
+    constructor() {
+        owner = msg.sender;
+    }
 
-    balances[to] += amount;
-    totalSupply += amount;
-  }
+    function getBalance() external view returns (uint) {
+        return record[msg.sender];
+    }
 
-  // Burn function
-  function burn(address from, uint256 amount) public {
-    require(amount <= balances[from], "Amount exceeds balance.");
+    // New function to fetch balance by inputting an account address
+    function getBalanceOf(address account) external view returns (uint) {
+        return record[account];
+    }
 
-    balances[from] -= amount;
-    totalSupply -= amount;
-  }
+    function mint(address to, uint amount) external {
+        require(msg.sender == owner, "Only owner can mint tokens");
+        record[to] += amount;
+    }
 
-  // Transfer function
-  function transfer(address to, uint256 amount) public {
-    require(amount <= balances[msg.sender], "Amount exceeds balance.");
-    require(to != address(0), "Cannot transfer to the zero address.");
+    function transferTo(address to, uint amount) external {
+        require(record[msg.sender] >= amount, "Insufficient balance in the account");
+        record[to] += amount;
+        record[msg.sender] -= amount;
+    }
 
-    balances[msg.sender] -= amount;
-    balances[to] += amount;
-  }
+    function burn(uint amount) external {
+        require(record[msg.sender] >= amount, "Insufficient balance in the account");
+        record[msg.sender] -= amount;
+    }
 }
