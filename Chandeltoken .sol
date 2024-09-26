@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Chandeltoken {
-    string public tokenName = "naman";
-    string public tokenAbbr = "NHT";
+    string public tokenName = "Nikhil";
+    string public tokenAbbr = "CHNDL";
 
     address owner;
 
