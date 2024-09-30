@@ -23,29 +23,39 @@ This repository contains the Solidity smart contract for the KiranjotToken (KJT)
 The contract uses OpenZeppelin's ERC20 and Ownable contracts. Ensure you have OpenZeppelin contracts installed in your project.
 # Contract code
 
-     // SPDX-License-Identifier: MIT
-     pragma solidity ^0.8.18;
+    // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
 
-    import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-    import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-    contract KiranjotToken is ERC20, Ownable(msg.sender) {
-    constructor() ERC20("Kiran jot", "KJT") {
-       
+// Contract inherits from ERC20 and Ownable
+contract Chandeltoken is ERC20, Ownable(msg.sender) {
+
+    constructor() ERC20("Nikhil", "CHNDL") {
+        // Mint initial supply to the owner (optional, remove or adjust as needed)
+        _mint(msg.sender, 1 * 1 ** decimals());
     }
 
-    // Override the OpenZeppelin mint function to restrict it to the owner
+    // Function to mint new tokens; only the owner can call this
     function mint(address to, uint256 amount) external onlyOwner {
         _mint(to, amount);
     }
 
-    // Function to burn tokens from the caller's balance
+    // Function to burn tokens from the caller's account
     function burn(uint256 amount) external {
         _burn(msg.sender, amount);
     }
 
-    // Additional function to get the balance of a specific address
-    function getBalance(address account) external view returns (uint256) {
+    // Transfer function is already available from ERC20; no need to redefine
+    // The getBalance() function can be replaced with the built-in balanceOf() function
+
+    // Optional: You can rename or alias the balanceOf function for convenience
+    function getBalance() external view returns (uint256) {
+        return balanceOf(msg.sender);
+    }
+
+    function getBalanceOf(address account) external view returns (uint256) {
         return balanceOf(account);
     }
 }
