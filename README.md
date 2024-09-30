@@ -3,7 +3,7 @@
 This project is a part of Metacrafters ETH+AVAX course assessment.
 
 In this project, we had to create a custom token using a smart contract, deploy it on the local hardhat network, and use Remix IDE to interact with it.
-# divneettoken
+# Chandeltoken
 
 This repository contains the Solidity smart contract for the KiranjotToken (KJT), an ERC20 token. The contract is implemented using OpenZeppelin's libraries for security and best practices.
 
