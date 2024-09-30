@@ -24,13 +24,13 @@ The contract uses OpenZeppelin's ERC20 and Ownable contracts. Ensure you have Op
 # Contract code
 
     // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+     pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+     import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+     import "@openzeppelin/contracts/access/Ownable.sol";
 
-// Contract inherits from ERC20 and Ownable
-contract Chandeltoken is ERC20, Ownable(msg.sender) {
+    // Contract inherits from ERC20 and Ownable
+    contract Chandeltoken is ERC20, Ownable(msg.sender) {
 
     constructor() ERC20("Nikhil", "CHNDL") {
         // Mint initial supply to the owner (optional, remove or adjust as needed)
