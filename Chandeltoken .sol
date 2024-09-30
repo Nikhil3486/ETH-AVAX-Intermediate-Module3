@@ -4,40 +4,33 @@ pragma solidity ^0.8.19;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Chandeltoken {
-    string public tokenName = "Nikhil";
-    string public tokenAbbr = "CHNDL";
+// Contract inherits from ERC20 and Ownable
+contract Chandeltoken is ERC20, Ownable(msg.sender) {
 
-    address owner;
-
-    mapping(address => uint) record;
-
-    constructor() {
-        owner = msg.sender;
+    constructor() ERC20("Nikhil", "CHNDL") {
+        // Mint initial supply to the owner (optional, remove or adjust as needed)
+        _mint(msg.sender, 1 * 1 ** decimals());
     }
 
-    function getBalance() external view returns (uint) {
-        return record[msg.sender];
+    // Function to mint new tokens; only the owner can call this
+    function mint(address to, uint256 amount) external onlyOwner {
+        _mint(to, amount);
     }
 
-    // New function to fetch balance by inputting an account address
-    function getBalanceOf(address account) external view returns (uint) {
-        return record[account];
+    // Function to burn tokens from the caller's account
+    function burn(uint256 amount) external {
+        _burn(msg.sender, amount);
     }
 
-    function mint(address to, uint amount) external {
-        require(msg.sender == owner, "Only owner can mint tokens");
-        record[to] += amount;
+    // Transfer function is already available from ERC20; no need to redefine
+    // The getBalance() function can be replaced with the built-in balanceOf() function
+
+    // Optional: You can rename or alias the balanceOf function for convenience
+    function getBalance() external view returns (uint256) {
+        return balanceOf(msg.sender);
     }
 
-    function transferTo(address to, uint amount) external {
-        require(record[msg.sender] >= amount, "Insufficient balance in the account");
-        record[to] += amount;
-        record[msg.sender] -= amount;
-    }
-
-    function burn(uint amount) external {
-        require(record[msg.sender] >= amount, "Insufficient balance in the account");
-        record[msg.sender] -= amount;
+    function getBalanceOf(address account) external view returns (uint256) {
+        return balanceOf(account);
     }
 }
