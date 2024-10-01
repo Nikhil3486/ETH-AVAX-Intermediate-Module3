@@ -9,7 +9,7 @@ contract Chandeltoken is ERC20, Ownable(msg.sender) {
 
     constructor() ERC20("Nikhil", "CHNDL") {
         // Mint initial supply to the owner
-        _mint(msg.sender, 1 * 10 ** decimals());
+        _mint(msg.sender, 1 * 1 ** decimals());
     }
 
     // Function to mint new tokens; only the owner can call this
@@ -31,9 +31,9 @@ contract Chandeltoken is ERC20, Ownable(msg.sender) {
         return balanceOf(account);
     }
 
-    // Custom transfer function for transferring tokens
-    function customTransfer(address to, uint256 amount) external returns (bool) {
-        _transfer(msg.sender, to, amount);
+    // Transfer function to send tokens to another address
+    function transfer(address to, uint256 amount) public override returns (bool) {
+        _transfer(_msgSender(), to, amount);
         return true;
     }
 }
