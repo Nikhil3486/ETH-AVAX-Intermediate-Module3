@@ -8,8 +8,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Chandeltoken is ERC20, Ownable(msg.sender) {
 
     constructor() ERC20("Nikhil", "CHNDL") {
-        // Mint initial supply to the owner (optional, remove or adjust as needed)
-        _mint(msg.sender, 1 * 1 ** decimals());
+        // Mint initial supply to the owner
+        _mint(msg.sender, 1 * 10 ** decimals());
     }
 
     // Function to mint new tokens; only the owner can call this
@@ -22,15 +22,18 @@ contract Chandeltoken is ERC20, Ownable(msg.sender) {
         _burn(msg.sender, amount);
     }
 
-    // Transfer function is already available from ERC20; no need to redefine
-    // The getBalance() function can be replaced with the built-in balanceOf() function
-
-    // Optional: You can rename or alias the balanceOf function for convenience
+    // Optional convenience functions for balance checking
     function getBalance() external view returns (uint256) {
         return balanceOf(msg.sender);
     }
 
     function getBalanceOf(address account) external view returns (uint256) {
         return balanceOf(account);
+    }
+
+    // Custom transfer function for transferring tokens
+    function customTransfer(address to, uint256 amount) external returns (bool) {
+        _transfer(msg.sender, to, amount);
+        return true;
     }
 }
